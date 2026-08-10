@@ -1,0 +1,246 @@
+/*
+ * Deliberately "unstyled": white page, black serif body text, blue emphasis,
+ * the look of a raw HTML document that never got a stylesheet. No gradients,
+ * no glow, no motion tricks. The plainness is the point; it reads as a machine
+ * stating facts, not a product trying to impress you.
+ */
+
+:root {
+  --ink: #000;
+  --bg: #fff;
+  --blue: #0000ee;
+  --grey: #555;
+  --faint: #888;
+  --rule: #cccccc;
+  --box: #f4f4f4;
+  --serif: Times, 'Times New Roman', serif;
+  --mono: 'Courier New', Courier, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.5;
+  /* wide content scrolls inside its own box; the page itself never does */
+  overflow-x: hidden;
+}
+
+body {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 9rem;
+}
+
+#dossier { width: 100%; }
+
+a, a:link { color: var(--blue); }
+a:visited { color: #551a8b; }
+
+/* ---------- inline typed intro ---------- */
+
+/* Typed intro lines stack in the normal reading column, same theme as claims,
+   just a touch larger. The caret is a CSS ::after on the actively-typing line. */
+.say {
+  font-size: 1.35rem;
+  line-height: 1.5;
+  margin: 0 0 1.1rem;
+  color: var(--ink);
+}
+.say em { font-style: normal; font-weight: bold; color: var(--blue); }
+.say.typing::after {
+  content: '';
+  display: inline-block;
+  width: 0.55ch;
+  height: 1.05em;
+  background: var(--ink);
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  animation: introblink 1s steps(1) infinite;
+}
+@keyframes introblink { 50% { opacity: 0; } }
+
+.intro-skip {
+  position: fixed;
+  top: 1rem;
+  right: 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--grey);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  z-index: 30;
+}
+.intro-hint {
+  position: fixed;
+  bottom: 1.4rem;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--faint);
+  margin: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .say.typing::after { animation: none; }
+}
+
+/* ---------- boot cursor ---------- */
+
+.boot { font-family: var(--mono); font-size: 1rem; color: var(--ink); }
+.caret {
+  display: inline-block; width: 0.5em; height: 1em; background: var(--ink);
+  vertical-align: -0.12em;
+}
+
+/* ---------- acts ---------- */
+
+.act { margin: 0 0 2rem; }
+.act + .act { padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+
+.act-label {
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 1rem;
+  color: var(--ink);
+}
+
+/* ---------- claims ---------- */
+
+.claim {
+  font-size: 1.2rem;
+  line-height: 1.45;
+  margin: 0 0 0.85rem;
+}
+
+.claim.likely { color: #000; }
+.claim.guess { color: #333; font-style: italic; }
+
+/* the opening device-judgement hook, bigger, sets the tone */
+.claim.hook {
+  font-size: 1.75rem;
+  line-height: 1.3;
+  font-weight: bold;
+  margin-bottom: 1.25rem;
+}
+
+/* the blue highlight, this is the only colour on the page besides links */
+.claim em { font-style: normal; font-weight: bold; color: var(--blue); }
+
+/* ---------- the "how?" link + drawer ---------- */
+
+.how-toggle {
+  display: inline;
+  margin-left: 0.35rem;
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--blue);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.how {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--grey);
+  background: var(--box);
+  border-left: 3px solid var(--rule);
+  padding: 0.6rem 0.8rem;
+  margin: 0.2rem 0 1.2rem;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+.how b { color: var(--ink); font-weight: bold; }
+.how[hidden] { display: none; }
+
+/* ---------- buttons (near-default) ---------- */
+
+button.go {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--ink);
+  background: #eee;
+  border: 1px solid #999;
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+}
+button.go:hover { background: #e0e0e0; }
+button.go.ghost { background: #fff; }
+button.go:disabled { color: #aaa; border-color: #ccc; cursor: default; }
+
+/* ---------- interactive typing ---------- */
+
+.type-target {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  border-left: 3px solid var(--rule);
+  padding: 0.4rem 0.8rem;
+  margin: 1rem 0 0.8rem;
+}
+.type-input {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #999;
+  padding: 0.5rem 0.7rem;
+}
+.type-input:focus { outline: 2px solid var(--blue); outline-offset: -1px; }
+.type-hint { font-family: var(--mono); font-size: 0.78rem; color: var(--faint); margin: 0.5rem 0 0; min-height: 1em; }
+.type-hint.ready { color: var(--blue); }
+
+/* ---------- scanning placeholder ---------- */
+
+.scanning { font-family: var(--mono); font-size: 0.9rem; color: var(--grey); padding: 0.5rem 0; }
+
+/* ---------- rarity funnel ---------- */
+
+.funnel { margin-top: 1.25rem; }
+.funnel-row { margin-bottom: 1rem; }
+.funnel-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--mono); font-size: 0.82rem; margin-bottom: 0.3rem;
+}
+.funnel-label { color: var(--grey); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; }
+.funnel-val { color: var(--ink); font-weight: bold; }
+.funnel-bar { height: 10px; background: #eee; border: 1px solid var(--rule); }
+.funnel-bar span { display: block; height: 100%; background: var(--ink); }
+.funnel-meta { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.75rem; color: var(--grey); margin-top: 0.25rem; }
+.funnel-cum { color: var(--blue); font-weight: bold; }
+
+/* ---------- receipt / finale ---------- */
+
+.verdict { font-size: 1.35rem; line-height: 1.35; margin: 0 0 1rem; }
+.fingerprint { font-family: var(--mono); font-size: clamp(1.4rem, 7vw, 2.1rem); letter-spacing: 0.05em; color: var(--blue); margin: 1rem 0; word-break: break-all; }
+
+.raw {
+  font-family: var(--mono); font-size: 0.75rem; line-height: 1.6; color: var(--ink);
+  background: var(--box); border: 1px solid var(--rule); padding: 0.8rem;
+  overflow-x: auto; max-height: 26rem; overflow-y: auto;
+  width: 100%; max-width: 100%;
+}
+/* .raw sits directly on the table, target it, not a descendant. Fixed layout
+   + 100% width makes long values wrap instead of blowing out the width. */
+table.raw { border-collapse: collapse; table-layout: fixed; }
+.raw td { padding: 0.08rem 0.8rem 0.08rem 0; vertical-align: top; overflow-wrap: anywhere; word-break: break-word; }
+.raw td:first-child { color: var(--faint); width: 34%; }
+.json-receipt { max-height: 30rem; color: var(--ink); white-space: pre; }
+
+.footnote { font-family: var(--mono); font-size: 0.78rem; line-height: 1.7; color: var(--grey); margin-top: 2.5rem; }
+.footnote a { color: var(--blue); }
